@@ -4,10 +4,20 @@ require 'date'
 
 date = Date.today
 
-month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+month = date.mon
+year = date.year
 youbi = ["日", "月", "火", "水", "木", "金", "土"]
+
+last_date = Date.new(year, month, -1).day
+day_youbi = Date.new(year, month, 1).wday
 
 puts ("#{date.month}月" "#{date.year}").center(20)
 puts youbi.join(' ')
 
+(1..last_date).each do |day|
+    print day.to_s.rjust(3)
+    day_youbi += 1
+    if day_youbi % 7 == 0
+        puts "\n"
+    end
+end
