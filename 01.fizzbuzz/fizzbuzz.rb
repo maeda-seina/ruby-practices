@@ -9,6 +9,6 @@ number.each{|n|
     elsif (n % 3 == 0)
         n = "Fizz"
     end
-    puts "#{n}"
+    puts n
 }
 
