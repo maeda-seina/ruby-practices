@@ -9,7 +9,7 @@ youbi = ["日", "月", "火", "水", "木", "金", "土"]
 
 opt = OptionParser.new
 opt.on('-m value') {|v| month = v.to_i }
-opt.on('-y value') {|w| year = w.to_i }
+opt.on('-y value') {|v| year = v.to_i }
 opt.parse!(ARGV)
 
 last_date = Date.new(year, month, -1).day
