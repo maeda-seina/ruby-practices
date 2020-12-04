@@ -21,7 +21,7 @@ print "   " * day_youbi
 (1..last_date).each do |day|
     print day.to_s.rjust(2) + " "
     day_youbi += 1
-    if day_youbi % 7 == 0
+    if day_youbi.saturday?
         puts "\n"
     end
 end
