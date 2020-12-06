@@ -12,18 +12,16 @@ opt.on('-m value') {|v| month = v.to_i }
 opt.on('-y value') {|v| year = v.to_i }
 opt.parse!(ARGV)
 
-last_date = Date.new(year, month, -1).day
+first_date = Date.new(year, month, 1)
+last_date = Date.new(year, month, -1)
 day_youbi = Date.new(year, month, 1).wday
 
 puts ("#{month}月" "#{year}").center(20)
 puts youbi.join(' ')
 print "   " * day_youbi
-(1..last_date).each do |day|
-    print day.to_s.rjust(2) + " "
-    day_youbi += 1
-    if day_youbi.saturday?
-        puts "\n"
-    end
+(first_date..last_date).each do |date|
+    print date.day.to_s.rjust(2) + " "
+    puts "\n" if date.saturday?
 end
 print "\n"
 
