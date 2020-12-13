@@ -45,4 +45,3 @@ frames.each_with_index do |frame, i|
              frame.sum
            end
 end
-
