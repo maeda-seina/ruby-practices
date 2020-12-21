@@ -21,10 +21,7 @@ scores.each do |s|
   end
 end
 
-frames = []
-shots.each_slice(2) do |shot|
-  frames << shot
-end
+frames = shots.to_a.each_slice(2).to_a
 
 if frames[10]
   a = frames[9]
@@ -32,6 +29,7 @@ if frames[10]
   a.concat(b)
   frames.delete(b)
 end
+p frames
 
 point = 0
 frames.each_with_index do |frame, i|
@@ -45,4 +43,3 @@ frames.each_with_index do |frame, i|
              frame.sum
            end
 end
-
