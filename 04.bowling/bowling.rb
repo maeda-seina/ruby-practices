@@ -30,15 +30,15 @@ if frames[10]
   frames.delete(b)
 end
 
+point = 0
 frames.each_with_index.sum do |frame, i|
-  if i < 9 && frames[i] == [10, 0] && frames[i + 1] == [10, 0]
-    frame.sum + frames[i + 1][0] + frames[i + 2][0]
-  elsif frame == [10, 0] && i < 9
-    frame.sum + frames[i + 1][0] + frames[i + 1][1]
-  elsif frame.sum == 10 && frame[0] != 10 && i < 9
-    frame.sum + frames[i + 1][0]
-  else
-    frame.sum
-  end
+  point += if i < 9 && frames[i] == [10, 0] && frames[i + 1] == [10, 0]
+             frame.sum + frames[i + 1][0] + frames[i + 2][0]
+           elsif frame == [10, 0] && i < 9
+             frame.sum + frames[i + 1][0] + frames[i + 1][1]
+           elsif frame.sum == 10 && frame[0] != 10 && i < 9
+             frame.sum + frames[i + 1][0]
+           else
+             frame.sum
+           end
 end
-
