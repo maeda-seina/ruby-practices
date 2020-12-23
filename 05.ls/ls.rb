@@ -5,7 +5,7 @@ require 'optparse'
 require 'etc'
 opt = OptionParser.new
 
-stat = File.stat($0)
+stat = File.stat(Dir.pwd)
 
 permissions = ("0%o" % stat.mode).to_i % 1000
 per1 =
