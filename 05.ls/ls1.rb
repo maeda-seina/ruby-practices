@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 # frozen_string_literal: true
 
 # コマンドライン引数使うため
@@ -111,88 +112,12 @@ def loption
   print block
   file.each do |f|
     stat = File.stat(f)
-    permissions = ('0%o' % stat.mode).to_i % 1000
-    per1 =
-      case permissions % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
-    per2 =
-      case permissions / 10 % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
-    per3 =
-      case permissions / 100 % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
+    permissions = format('0%o', stat.mode).to_i % 1000
+    permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
     filetype = stat.ftype
-    file =
-      case filetype
-      when 'file'
-        '-'
-      when 'directory'
-        'd'
-      when 'characterSpecial'
-        'c'
-      when 'blockSpecial'
-        'b'
-      when 'fifo'
-        'p'
-      when 'link'
-        'l'
-      when 'socket'
-        's'
-      when 'unknown'
-        'u'
-      end
-    print "#{file + per3 + per2 + per1}  "
+    file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
+             'unknown' => 'u' }
+    print "#{file[filetype] + permission[permissions / 100 % 10] + permission[permissions / 10 % 10] + permission[permissions % 10]}  "
     print "#{stat.nlink}  "
     print "#{Etc.getpwuid(File.stat(f).uid).name}  "
     print "#{Etc.getgrgid(File.stat(f).gid).name}  "
@@ -210,88 +135,12 @@ def loptions
   print blocks
   files.each do |f|
     stat = File.stat(f)
-    permissions = ('0%o' % stat.mode).to_i % 1000
-    per1 =
-      case permissions % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
-    per2 =
-      case permissions / 10 % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
-    per3 =
-      case permissions / 100 % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
+    permissions = format('0%o', stat.mode).to_i % 1000
+    permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
     filetype = stat.ftype
-    file =
-      case filetype
-      when 'file'
-        '-'
-      when 'directory'
-        'd'
-      when 'characterSpecial'
-        'c'
-      when 'blockSpecial'
-        'b'
-      when 'fifo'
-        'p'
-      when 'link'
-        'l'
-      when 'socket'
-        's'
-      when 'unknown'
-        'u'
-      end
-    print "#{file + per3 + per2 + per1}  "
+    file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
+             'unknown' => 'u' }
+    print "#{file[filetype] + permission[permissions / 100 % 10] + permission[permissions / 10 % 10] + permission[permissions % 10]}  "
     print "#{stat.nlink}  "
     print "#{Etc.getpwuid(File.stat(f).uid).name}  "
     print "#{Etc.getgrgid(File.stat(f).gid).name}  "
@@ -309,88 +158,12 @@ def loption_reverse
   print block
   file.reverse_each do |f|
     stat = File.stat(f)
-    permissions = ('0%o' % stat.mode).to_i % 1000
-    per1 =
-      case permissions % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
-    per2 =
-      case permissions / 10 % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
-    per3 =
-      case permissions / 100 % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
+    permissions = format('0%o', stat.mode).to_i % 1000
+    permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
     filetype = stat.ftype
-    file =
-      case filetype
-      when 'file'
-        '-'
-      when 'directory'
-        'd'
-      when 'characterSpecial'
-        'c'
-      when 'blockSpecial'
-        'b'
-      when 'fifo'
-        'p'
-      when 'link'
-        'l'
-      when 'socket'
-        's'
-      when 'unknown'
-        'u'
-      end
-    print "#{file + per3 + per2 + per1}  "
+    file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
+             'unknown' => 'u' }
+    print "#{file[filetype] + permission[permissions / 100 % 10] + permission[permissions / 10 % 10] + permission[permissions % 10]}  "
     print "#{stat.nlink}  "
     print "#{Etc.getpwuid(File.stat(f).uid).name}  "
     print "#{Etc.getgrgid(File.stat(f).gid).name}  "
@@ -408,88 +181,12 @@ def loptions_reverse
   print blocks
   files.reverse_each do |f|
     stat = File.stat(f)
-    permissions = ('0%o' % stat.mode).to_i % 1000
-    per1 =
-      case permissions % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
-    per2 =
-      case permissions / 10 % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
-    per3 =
-      case permissions / 100 % 10
-      when 0
-        '---'
-      when 1
-        '--x'
-      when 2
-        '-w-'
-      when 3
-        '-wx'
-      when 4
-        'r--'
-      when 5
-        'r-x'
-      when 6
-        'rw-'
-      when 7
-        'rwx'
-      end
-
+    permissions = format('0%o', stat.mode).to_i % 1000
+    permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
     filetype = stat.ftype
-    file =
-      case filetype
-      when 'file'
-        '-'
-      when 'directory'
-        'd'
-      when 'characterSpecial'
-        'c'
-      when 'blockSpecial'
-        'b'
-      when 'fifo'
-        'p'
-      when 'link'
-        'l'
-      when 'socket'
-        's'
-      when 'unknown'
-        'u'
-      end
-    print "#{file + per3 + per2 + per1}  "
+    file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
+             'unknown' => 'u' }
+    print "#{file[filetype] + permission[permissions / 100 % 10] + permission[permissions / 10 % 10] + permission[permissions % 10]}  "
     print "#{stat.nlink}  "
     print "#{Etc.getpwuid(File.stat(f).uid).name}  "
     print "#{Etc.getgrgid(File.stat(f).gid).name}  "

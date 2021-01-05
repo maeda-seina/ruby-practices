@@ -1,3 +1,9 @@
 # frozen_string_literal: true
 
-s
+type = 'test'
+lists = {
+  'interview' => 'インタビュー',
+  'test' => 'テスト',
+  'standard' => '通常'
+}
+p lists[type]
