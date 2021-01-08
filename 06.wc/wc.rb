@@ -4,10 +4,11 @@
 a = []
 ARGF.each do |line|
     a << line
+    p line
     p a
 end
 print "       #{a.count}      "
-b = a.to_s.split(/\s+/).size-1
+b = a.to_s.split(/\s+/).size
 print "#{b}     "
 print "#{   a.to_s.bytesize}"
 print "\n"

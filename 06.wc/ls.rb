@@ -21,7 +21,7 @@ def filefile
     print "#{f}  "
     puts "\n" if (count % 3).zero?
   end
-  print ''
+  print "\n"
 end
 
 # rオプションの時に横に最大3列を維持して表示するメソッド
@@ -36,7 +36,7 @@ def filefile_reverse
     print "#{f}  "
     puts "\n" if (count % 3).zero?
   end
-  print ''
+  print "\n"
 end
 
 # aオプションの時に横に最大3列を維持して表示するメソッド
@@ -51,7 +51,7 @@ def filesfiles
     print "#{fs}  "
     puts "\n" if (count % 3).zero?
   end
-  print ''
+  print "\n"
 end
 
 # arオプションの時に横に最大3列を維持して表示するメソッド
@@ -66,7 +66,7 @@ def filesfiles_reverse
     print "#{fs}  "
     puts "\n" if (count % 3).zero?
   end
-  print ''
+  print "\n"
 end
 
 # .や..を含まないfileメソッド
@@ -126,8 +126,6 @@ def loption
     print File.basename(f)
     print "\n"
   end
-  # 戻り値にファイルが入った配列が表示されてしまうため書いた。何かいい方法ないか。
-  print ''
 end
 
 # alオプションのメソッド
@@ -149,8 +147,6 @@ def loptions
     print File.basename(f)
     print "\n"
   end
-  # 戻り値にファイルが入った配列が表示されてしまうため書いた。何かいい方法ないか。
-  print ''
 end
 
 # arオプションのメソッド
@@ -172,8 +168,6 @@ def loption_reverse
     print File.basename(f)
     print "\n"
   end
-  # 戻り値にファイルが入った配列が表示されてしまうため書いた。何かいい方法ないか。
-  print ''
 end
 
 # alrオプションのメソッド
@@ -195,24 +189,22 @@ def loptions_reverse
     print File.basename(f)
     print "\n"
   end
-  # 戻り値にファイルが入った配列が表示されてしまうため書いた。何かいい方法ないか。
-  print ''
 end
 
 if params['a'] && params['l'] && params['r']
-  puts loptions_reverse
+  loptions_reverse
 elsif params['r'] && params['l']
-  puts loption_reverse
+  loption_reverse
 elsif params['a'] && params['r']
-  puts filesfiles_reverse
+  filesfiles_reverse
 elsif params['a'] && params['l']
-  puts loptions
+  loptions
 elsif params['r']
-  puts filefile_reverse
+  filefile_reverse
 elsif params['a']
-  puts filesfiles
+  filesfiles
 elsif params['l']
-  puts loption
+  loption
 else
-  puts filefile
+  filefile
 end
