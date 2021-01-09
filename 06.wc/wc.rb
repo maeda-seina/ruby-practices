@@ -9,8 +9,10 @@ ARGF.each do |line|
 end
 print "       #{a.count}      "
 b = a.to_s.split(/\s+/).size
-print "#{b}     "
-print "#{   a.to_s.bytesize}"
+puts "#{b}     "
+puts "#{a.to_s.delete("[],\\n,\\")}  "
+puts "#{a.to_s.delete("[],\\n,\\").bytesize}  "
+puts "#{a.to_s.bytesize}"
 print "\n"
 
 
