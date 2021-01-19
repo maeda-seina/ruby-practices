@@ -40,8 +40,7 @@ end
 if ARGV.count == 1 && !params['l']
   file = File.read(ARGV[0])
   print "     #{file.lines.count}  "
-  word_count = file.split(/\s+/)
-  print "   #{word_count.size} "
+  print "   #{file.split(/\s+/).size} "
   print "   #{file.bytesize} "
   print ARGV[0]
   print "\n"
@@ -55,8 +54,7 @@ if ARGV.count > 1 && !params['l']
   ARGV.each do |f|
     file = File.read(f)
     print "     #{file.lines.count}  "
-    word_count = file.split(/\s+/)
-    print "   #{word_count.size} "
+    print "   #{file.split(/\s+/).size} "
     print "   #{file.bytesize} "
     print f
     print "\n"
