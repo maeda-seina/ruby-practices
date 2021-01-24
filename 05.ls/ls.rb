@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 # frozen_string_literal: true
 
 # コマンドライン引数使うため
@@ -9,68 +8,8 @@ require 'etc'
 
 params = ARGV.getopts('a', 'l', 'r')
 
-# オプションなしの時の横に最大3列を維持して表示するメソッド
-def filefile
-  file = []
-  Dir.glob('*') do |item|
-    file << item
-  end
-  count = 0
-  file.each do |f|
-    count += 1
-    print "#{f}  "
-    puts "\n" if (count % 3).zero?
-  end
-  print "\n"
-end
-
-# rオプションの時に横に最大3列を維持して表示するメソッド
-def filefile_reverse
-  file = []
-  Dir.glob('*') do |item|
-    file << item
-  end
-  count = 0
-  file.reverse_each do |f|
-    count += 1
-    print "#{f}  "
-    puts "\n" if (count % 3).zero?
-  end
-  print "\n"
-end
-
-# aオプションの時に横に最大3列を維持して表示するメソッド
-def filesfiles
-  files = []
-  Dir.foreach('.') do |item|
-    files << item
-  end
-  count = 0
-  files.each do |fs|
-    count += 1
-    print "#{fs}  "
-    puts "\n" if (count % 3).zero?
-  end
-  print "\n"
-end
-
-# arオプションの時に横に最大3列を維持して表示するメソッド
-def filesfiles_reverse
-  files = []
-  Dir.foreach('.') do |item|
-    files << item
-  end
-  count = 0
-  files.reverse_each do |fs|
-    count += 1
-    print "#{fs}  "
-    puts "\n" if (count % 3).zero?
-  end
-  print "\n"
-end
-
-# .や..を含まないfileメソッド
-def file
+# aオプションなしの時のfile
+def file_method
   file = []
   Dir.glob('*') do |item|
     file << item
@@ -78,39 +17,42 @@ def file
   file
 end
 
-# .や..も含んだ全てのfileメソッド
-def files
-  files = []
+# aオプションありの時のfile
+def files_method
+  file = []
   Dir.foreach('.') do |item|
-    files << item
+    file << item
   end
-  files
+  file
 end
 
-# lオプションのブロック数の合計値を表すメソッド
-def block
-  block = 0
-  file.each do |f|
-    stat = File.stat(f)
-    block += stat.blocks
-  end
+# aオプション条件分岐
+file_a_method = if params['a']
+                  files_method
+                else
+                  file_method
+                end
+
+file_a_method = file_a_method.sort
+
+# rオプション条件分岐
+sorted_file = if params['r']
+                file_a_method.reverse
+              else
+                file_a_method
+              end
+
+# lオプションblock数
+block = 0
+sorted_file.each do |f|
+  stat = File.stat(f)
+  block += stat.blocks
+end
+
+# lオプション条件分岐
+if params['l']
   puts "total #{block}"
-end
-
-# alオプションのブロック数の合計値を表すメソッド
-def blocks
-  block = 0
-  files.each do |f|
-    stat = File.stat(f)
-    block += stat.blocks
-  end
-  puts "total #{block}"
-end
-
-# lオプションのメソッド
-def loption
-  print block
-  file.each do |f|
+  sorted_file.each do |f|
     stat = File.stat(f)
     permissions = format('0%o', stat.mode).to_i % 1000
     permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
@@ -118,93 +60,20 @@ def loption
     file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
              'unknown' => 'u' }
     print "#{file[filetype] + permission[permissions / 100 % 10] + permission[permissions / 10 % 10] + permission[permissions % 10]}  "
-    print "#{stat.nlink}  "
+    print "#{stat.nlink} "
     print "#{Etc.getpwuid(File.stat(f).uid).name}  "
     print "#{Etc.getgrgid(File.stat(f).gid).name}  "
     print "#{stat.size}  "
-    print "#{stat.mtime.strftime('%m %d %H:%M')}  "
+    print "#{stat.mtime.strftime('%-m %d %H:%M')}  "
     print File.basename(f)
     print "\n"
   end
-end
-
-# alオプションのメソッド
-def loptions
-  print blocks
-  files.each do |f|
-    stat = File.stat(f)
-    permissions = format('0%o', stat.mode).to_i % 1000
-    permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
-    filetype = stat.ftype
-    file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
-             'unknown' => 'u' }
-    print "#{file[filetype] + permission[permissions / 100 % 10] + permission[permissions / 10 % 10] + permission[permissions % 10]}  "
-    print "#{stat.nlink}  "
-    print "#{Etc.getpwuid(File.stat(f).uid).name}  "
-    print "#{Etc.getgrgid(File.stat(f).gid).name}  "
-    print "#{stat.size}  "
-    print "#{stat.mtime.strftime('%m %d %H:%M')}  "
-    print File.basename(f)
-    print "\n"
-  end
-end
-
-# arオプションのメソッド
-def loption_reverse
-  print block
-  file.reverse_each do |f|
-    stat = File.stat(f)
-    permissions = format('0%o', stat.mode).to_i % 1000
-    permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
-    filetype = stat.ftype
-    file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
-             'unknown' => 'u' }
-    print "#{file[filetype] + permission[permissions / 100 % 10] + permission[permissions / 10 % 10] + permission[permissions % 10]}  "
-    print "#{stat.nlink}  "
-    print "#{Etc.getpwuid(File.stat(f).uid).name}  "
-    print "#{Etc.getgrgid(File.stat(f).gid).name}  "
-    print "#{stat.size}  "
-    print "#{stat.mtime.strftime('%m %d %H:%M')}  "
-    print File.basename(f)
-    print "\n"
-  end
-end
-
-# alrオプションのメソッド
-def loptions_reverse
-  print blocks
-  files.reverse_each do |f|
-    stat = File.stat(f)
-    permissions = format('0%o', stat.mode).to_i % 1000
-    permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
-    filetype = stat.ftype
-    file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
-             'unknown' => 'u' }
-    print "#{file[filetype] + permission[permissions / 100 % 10] + permission[permissions / 10 % 10] + permission[permissions % 10]}  "
-    print "#{stat.nlink}  "
-    print "#{Etc.getpwuid(File.stat(f).uid).name}  "
-    print "#{Etc.getgrgid(File.stat(f).gid).name}  "
-    print "#{stat.size}  "
-    print "#{stat.mtime.strftime('%m %d %H:%M')}  "
-    print File.basename(f)
-    print "\n"
-  end
-end
-
-if params['a'] && params['l'] && params['r']
-  loptions_reverse
-elsif params['r'] && params['l']
-  loption_reverse
-elsif params['a'] && params['r']
-  filesfiles_reverse
-elsif params['a'] && params['l']
-  loptions
-elsif params['r']
-  filefile_reverse
-elsif params['a']
-  filesfiles
-elsif params['l']
-  loption
 else
-  filefile
+  count = 0
+  sorted_file.each do |f|
+    count += 1
+    print "#{f}  "
+    puts "\n" if (count % 3).zero?
+  end
+  print "\n"
 end
