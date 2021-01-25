@@ -59,7 +59,7 @@ if ARGV.count > 1 && !params['l']
     print f
     print "\n"
     lines_sum += file.lines.count
-    words_sum += word_count.size
+    words_sum += file.split(/\s+/).size
     bytes_sum += file.bytesize
   end
   print "     #{lines_sum}  "
