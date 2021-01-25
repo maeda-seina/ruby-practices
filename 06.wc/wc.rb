@@ -5,7 +5,7 @@ require 'optparse'
 
 params = ARGV.getopts('l')
 
-def file_print(file)
+def print_file(file)
   file = File.read(file)
   print "     #{file.lines.count}  "
   print "   #{file.split(/\s+/).size} "
@@ -45,7 +45,7 @@ end
 
 # 引数にファイル名が1つの時の処理
 if ARGV.count == 1 && !params['l']
-  file_print(ARGV[0])
+  print_file(ARGV[0])
   print ARGV[0]
   print "\n"
 end
@@ -56,7 +56,7 @@ if ARGV.count > 1 && !params['l']
   words_sum = 0
   bytes_sum = 0
   ARGV.each do |f|
-    file_print(f)
+    print_file(f)
     print f
     print "\n"
     file = File.read(f)
