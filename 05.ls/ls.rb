@@ -32,9 +32,9 @@ def loption(file)
   permission_of_tens_place = permission[permissions / 10 % 10]
   permission_of_ones_place = permission[permissions % 10]
   filetype = stat.ftype
-  file_symbol = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
+  file_hash = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
            'unknown' => 'u' }
-  print file_symbol[filetype] + permission_of_hundreds_place + permission_of_tens_place + permission_of_ones_place
+  print file_hash[filetype] + permission_of_hundreds_place + permission_of_tens_place + permission_of_ones_place
   print stat.nlink.to_s.rjust(3)
   print Etc.getpwuid(stat.uid).name.rjust(11)
   print Etc.getgrgid(stat.gid).name.rjust(7)
