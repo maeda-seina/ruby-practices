@@ -32,14 +32,16 @@ def loption(file)
   permission_of_tens_place = permission[permissions / 10 % 10]
   permission_of_ones_place = permission[permissions % 10]
   filetype = stat.ftype
-  file = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
+  file_symbol = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
            'unknown' => 'u' }
-  print file[filetype] + permission_of_hundreds_place + permission_of_tens_place + permission_of_ones_place
+  print file_symbol[filetype] + permission_of_hundreds_place + permission_of_tens_place + permission_of_ones_place
   print stat.nlink.to_s.rjust(3)
   print Etc.getpwuid(stat.uid).name.rjust(11)
   print Etc.getgrgid(stat.gid).name.rjust(7)
   print stat.size.to_s.rjust(6)
   print (stat.mtime.strftime('%-m %d %H:%M')).rjust(12)
+  print File.basename(file).rjust(6)
+  print "\n"
 end
 
 # aオプション条件分岐
@@ -59,8 +61,6 @@ if params['l']
   puts "total #{block}"
   sorted_file.each do |file|
     loption(file)
-    print File.basename(file).rjust(6)
-    print "\n"
   end
 else
   sorted_file.each.with_index(1) do |file, index|
