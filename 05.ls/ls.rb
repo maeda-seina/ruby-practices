@@ -24,7 +24,7 @@ def file_with_a_option
   file
 end
 
-def loption(file)
+def loption_output_processing(file)
   stat = File.stat(file)
   permissions = format('0%o', stat.mode).to_i % 1000
   permission = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }
@@ -33,7 +33,7 @@ def loption(file)
   permission_of_ones_place = permission[permissions % 10]
   filetype = stat.ftype
   file_hash = { 'file' => '-', 'directory' => 'd', 'characterSpecial' => 'c', 'blockSpecial' => 'b', 'fifo' => 'p', 'link' => 'l', 'socket' => 's',
-           'unknown' => 'u' }
+                'unknown' => 'u' }
   print file_hash[filetype] + permission_of_hundreds_place + permission_of_tens_place + permission_of_ones_place
   print stat.nlink.to_s.rjust(3)
   print Etc.getpwuid(stat.uid).name.rjust(11)
@@ -60,7 +60,7 @@ if params['l']
   end
   puts "total #{block}"
   sorted_file.each do |file|
-    loption(file)
+    loption_output_processing(file)
   end
 else
   sorted_file.each.with_index(1) do |file, index|
