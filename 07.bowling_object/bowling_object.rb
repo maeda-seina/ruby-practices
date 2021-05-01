@@ -2,7 +2,7 @@
 
 class Game
   attr_reader :game_score
-  
+
   def initialize(game_score)
     @game_score = game_score
   end
@@ -13,13 +13,10 @@ class Game
   end
 
   # ここで、Frame.newを使い、frameを完成させる。
-  def to_frame
-  end
+  def to_frame; end
 
   # ここでstrikeとspareの得点調整をする
-  def bonus_score
-  end
-
+  def bonus_score; end
 end
 
 class Frame
@@ -52,18 +49,15 @@ end
 
 # frame = Frame.new(1, 2)
 # puts frame.calc_frame_score
-score = "2,3"
-p s = score.split(",")
+score = '2,3'
+p s = score.split(',')
 game = Game.new(s)
 p game.game_score
 # @game_score => ["2", "3"]
 
-
-
 # game = Game.new(score).split(",")
 # p game.game_score
 # puts game.calc_game_score
-
 
 # ゴール
 # score = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'.split(',')
