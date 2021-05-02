@@ -28,7 +28,6 @@ class Frame
   end
 end
 
-
 class Game
   attr_reader :game_score
 
@@ -52,14 +51,12 @@ class Game
     frame = []
     game_score.each do |score|
       frame << score
-      if frames.count < 9
-        if frame.count >= 2 || score == 'X'
-          # フレームの中身確認用
-          p frame
-          frames << Frame.new(frame[0], frame[1])
-          frame.clear
-        end
-      end
+      next unless frames.count < 9 && (frame.count >= 2 || score == 'X')
+
+      # フレームの中身確認用
+      p frame
+      frames << Frame.new(frame[0], frame[1])
+      frame.clear
     end
     # 最終フレーム確認用
     p frame[0]
@@ -70,17 +67,13 @@ class Game
   end
 
   # ここでstrikeとspareの得点調整をする
-  def calculate_bonus_score(frame_number)
-    point = 0
-  end
+  def calculate_bonus_score(_frame_number); end
 end
-
 
 score = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'.split(',')
 # score = 'X,X,X,X,X,X,X,X,X,X,X,X'.split(",")
 # score = '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0'.split(",")
 Game.new(score).create_frame
-
 
 # ゴール
 # score = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'.split(',')
