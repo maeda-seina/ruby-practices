@@ -26,7 +26,18 @@ class Frame
   def calculate_frame_score
     @first_shot.mark.to_i + @second_shot.mark.to_i + @third_shot.mark.to_i
   end
+
+  def strike?
+    @first_shot.score == 10
+  end
+
+  def spare?
+    @first_shot.mark.to_i + @second_shot.mark.to_i == 10 || @first_shot.mark.to_i + @second_shot.score == 10
+  end
 end
+p Frame.new("2").first_shot.mark
+p Frame.new('X').first_shot.score
+p Frame.new('0', 'X').strike?
 
 class Game
   attr_reader :game_score
@@ -53,21 +64,16 @@ class Game
       frame << score
       next unless frames.count < 9 && (frame.count >= 2 || score == 'X')
 
-      # フレームの中身確認用
-      p frame
       frames << Frame.new(frame[0], frame[1])
       frame.clear
     end
-    # 最終フレーム確認用
-    p frame[0]
-    p frame[1]
-    p frame[2]
-    p frame[3]
     frames << Frame.new(frame[0], frame[1], frame[2])
   end
 
   # ここでstrikeとspareの得点調整をする
-  def calculate_bonus_score(_frame_number); end
+  def calculate_bonus_score(_frame_number)
+    point = 0
+  end
 end
 
 score = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'.split(',')
