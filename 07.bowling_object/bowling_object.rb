@@ -24,7 +24,7 @@ class Frame
   end
 
   def calculate_frame_score
-    @first_shot.mark.to_i + @second_shot.mark.to_i + @third_shot.mark.to_i
+    @first_shot.score + @second_shot.score + @third_shot.score
   end
 
   def strike?
@@ -32,10 +32,11 @@ class Frame
   end
 
   def spare?
-    @first_shot.mark.to_i + @second_shot.mark.to_i == 10 || @first_shot.mark.to_i + @second_shot.score == 10
+    @first_shot.score + @second_shot.score == 10 && @first_shot.score != 10
   end
 end
 p Frame.new("2").first_shot.mark
+p Frame.new("2").first_shot.score
 p Frame.new('X').first_shot.score
 p Frame.new('0', 'X').strike?
 
