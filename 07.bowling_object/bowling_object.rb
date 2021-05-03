@@ -60,17 +60,16 @@ class Game
 
   # 最終はここでボーナス分と合わせた計算ができるようにする
   def calculate_game_score
-    point = 0
+    point = calculate_bonus_score
     10.times do |frame_number|
       point += @frames[frame_number].calculate_frame_score
     end
-    point
+    p point
   end
 
   # ここでstrikeとspareの得点調整をする
   def calculate_bonus_score
     point = 0
-    p @frames[9].first_shot.score + @frames[9].second_shot.score
     @frames.each_with_index do |frame, i|
       # 9フレームがストライクの時、10フレームはfirst_shot,second_shotがいるので、別で処理
       if i == 8 && @frames[8].first_shot.score == 10
@@ -83,14 +82,9 @@ class Game
         point += @frames[i+1].first_shot.score
       end
     end
-    p point
+    point
   end
 end
-
-# score = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'.split(',')
-score = 'X,X,X,X,X,X,X,X,X,X,X,X'.split(",")
-# score = '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0'.split(",")
-Game.new(score).calculate_bonus_score
 
 # ゴール
 # score = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'.split(',')
