@@ -74,3 +74,5 @@ class Game
     point
   end
 end
+score = ARGV[0].split(',')
+puts Game.new(score).calculate_game_score
