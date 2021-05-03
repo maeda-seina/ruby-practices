@@ -26,14 +26,6 @@ class Frame
   def calculate_frame_score
     @first_shot.score + @second_shot.score + @third_shot.score
   end
-
-  def strike?
-    @first_shot.score == 10
-  end
-
-  def spare?
-    @first_shot.score + @second_shot.score == 10 && @first_shot.score != 10
-  end
 end
 
 class Game
@@ -44,7 +36,6 @@ class Game
     create_frame(game_score)
   end
 
-  # ここで、Frame.newを使い、frameを完成させる。
   def create_frame(game_score)
     @frames = []
     frame = []
@@ -58,16 +49,14 @@ class Game
     @frames << Frame.new(frame[0], frame[1], frame[2])
   end
 
-  # 最終はここでボーナス分と合わせた計算ができるようにする
   def calculate_game_score
     point = calculate_bonus_score
     10.times do |frame_number|
       point += @frames[frame_number].calculate_frame_score
     end
-    p point
+    point
   end
 
-  # ここでstrikeとspareの得点調整をする
   def calculate_bonus_score
     point = 0
     @frames.each_with_index do |frame, i|
