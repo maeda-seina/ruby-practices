@@ -59,23 +59,18 @@ class Game
 
   def calculate_bonus_score
     point = 0
-    @frames.each_with_index do |frame, i|
+    @frames.each_with_index do |_frame, i|
       # 9フレームがストライクの時、10フレームはfirst_shot,second_shotがいるので、別で処理
       if i == 8 && @frames[8].first_shot.score == 10
         point += @frames[9].first_shot.score + @frames[9].second_shot.score
-      elsif i < 8 && @frames[i].first_shot.score == 10 && @frames[i+1].first_shot.score == 10
-        point += @frames[i+1].first_shot.score + @frames[i+2].first_shot.score
+      elsif i < 8 && @frames[i].first_shot.score == 10 && @frames[i + 1].first_shot.score == 10
+        point += @frames[i + 1].first_shot.score + @frames[i + 2].first_shot.score
       elsif i < 9 && @frames[i].first_shot.score == 10
-        point += @frames[i+1].first_shot.score + @frames[i+1].second_shot.score
+        point += @frames[i + 1].first_shot.score + @frames[i + 1].second_shot.score
       elsif i < 9 && @frames[i].first_shot.score + @frames[i].second_shot.score == 10
-        point += @frames[i+1].first_shot.score
+        point += @frames[i + 1].first_shot.score
       end
     end
     point
   end
 end
-
-# ゴール
-# score = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'.split(',')
-# Game.new(score).calculate_game_score
-#=> 139
