@@ -13,8 +13,17 @@ class BowlingObjectTest < Minitest::Test
     assert_equal 94, Game.new(score).calculate_game_score
     score = '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0'.split(',')
     assert_equal 0, Game.new(score).calculate_game_score
-    score = 'X,X,X,X,X,X,X,X,X,X'.split(',')
-    assert_equal 100, Game.new(score).calculate_game_score
+    score = 'X,X,X,X,X,X,X,X,X,X,X,X'.split(',')
+    assert_equal 120, Game.new(score).calculate_game_score
+  end
+
+  def test_only_bonus_score
+    score = '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'.split(',')
+    assert_equal 45, Game.new(score).calculate_bonus_score
+    score = '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0'.split(',')
+    assert_equal 0, Game.new(score).calculate_bonus_score
+    score = 'X,X,X,X,X,X,X,X,X,X,X,X'.split(',')
+    assert_equal 180, Game.new(score).calculate_bonus_score
   end
 
   def test_frame_strike?
