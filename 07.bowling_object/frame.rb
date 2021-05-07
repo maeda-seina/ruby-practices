@@ -12,4 +12,12 @@ class Frame
   def calculate_frame_score
     @first_shot.score + @second_shot.score + @third_shot.score
   end
+
+  def strike?
+    @first_shot.score == 10
+  end
+
+  def spare?
+    @first_shot.score + @second_shot.score == 10 && @first_shot.score != 10
+  end
 end

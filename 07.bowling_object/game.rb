@@ -18,11 +18,11 @@ class Game
   def calculate_bonus_score
     point = 0
     @frames.each_with_index do |_frame, i|
-      if i < 8 && @frames[i].first_shot.score == 10 && @frames[i + 1].first_shot.score == 10
+      if i < 8 && @frames[i].strike? && @frames[i + 1].strike?
         point += @frames[i + 1].first_shot.score + @frames[i + 2].first_shot.score
-      elsif i < 9 && @frames[i].first_shot.score == 10
+      elsif i < 9 && @frames[i].strike?
         point += @frames[i + 1].first_shot.score + @frames[i + 1].second_shot.score
-      elsif i < 9 && @frames[i].first_shot.score + @frames[i].second_shot.score == 10
+      elsif i < 9 && @frames[i].spare?
         point += @frames[i + 1].first_shot.score
       end
     end
