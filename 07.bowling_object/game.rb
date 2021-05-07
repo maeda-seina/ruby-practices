@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class Game
-  attr_reader :game_score
 
   def initialize(game_score)
-    @game_score = game_score
     create_frame(game_score)
   end
 
