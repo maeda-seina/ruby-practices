@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
 class Game
-
   def initialize(game_score)
     create_frame(game_score)
-  end
-
-  def create_frame(game_score)
-    @frames = []
-    frame = []
-    game_score.each do |score|
-      frame << score
-      next unless @frames.count < 9 && (frame.count >= 2 || score == 'X')
-
-      @frames << Frame.new(frame[0], frame[1])
-      frame.clear
-    end
-    @frames << Frame.new(frame[0], frame[1], frame[2])
   end
 
   def calculate_game_score
@@ -39,5 +25,20 @@ class Game
       end
     end
     point
+  end
+
+  private
+
+  def create_frame(game_score)
+    @frames = []
+    frame = []
+    game_score.each do |score|
+      frame << score
+      next unless @frames.count < 9 && (frame.count >= 2 || score == 'X')
+
+      @frames << Frame.new(frame[0], frame[1])
+      frame.clear
+    end
+    @frames << Frame.new(frame[0], frame[1], frame[2])
   end
 end
