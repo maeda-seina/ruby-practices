@@ -34,7 +34,8 @@ class Game
   def create_frame(game_score)
     @frames = []
     frame = []
-    game_score.each do |score|
+    split_game_score = game_score.split(',')
+    split_game_score.each do |score|
       frame << score
       next unless @frames.count < 9 && (frame.count >= 2 || score == 'X')
 

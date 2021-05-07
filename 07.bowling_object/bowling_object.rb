@@ -3,5 +3,4 @@
 require './shot'
 require './frame'
 require './game'
-score = ARGV[0].split(',')
-puts Game.new(score).calculate_game_score
+puts Game.new(ARGV[0]).calculate_game_score
