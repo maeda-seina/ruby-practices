@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require './bowling_object'
+require './shot'
+require './frame'
+require './game'
 require 'minitest/autorun'
 
 class BowlingObjectTest < Minitest::Test
