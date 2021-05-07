@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class Game
+  FRAME_NUMBER = 10
+
   def initialize(game_score)
     create_frame(game_score)
   end
 
   def calculate_game_score
     point = calculate_bonus_score
-    10.times do |frame_number|
+    FRAME_NUMBER.times do |frame_number|
       point += @frames[frame_number].calculate_frame_score
     end
     point
